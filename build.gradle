@@ -23,6 +23,14 @@ shadowJar {
     manifest {
         attributes "Main-Class": "com.ykrc17.android.kizuna.MainKt"
     }
+    doLast {
+        copy {
+            from("$buildDir/libs") {
+                include "*.jar"
+            }
+            into "$projectDir/release"
+        }
+    }
 }
 
 dependencies {
