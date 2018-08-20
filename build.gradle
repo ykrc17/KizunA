@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.60"
+    }
+}
+
+apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "kotlin"
+
+repositories {
+    mavenCentral()
+}
+
+shadowJar {
+    classifier = null
+    version = null
+    manifest {
+        attributes "Main-Class": "com.ykrc17.android.kizuna.MainKt"
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.dom4j:dom4j:2.1.1"
+    compile "com.squareup:javapoet:1.11.1"
+}
