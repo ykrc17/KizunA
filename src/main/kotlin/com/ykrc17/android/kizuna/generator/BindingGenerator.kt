@@ -16,7 +16,7 @@ fun generateBinding(layoutElements: List<LayoutElementModel>, packageName: Strin
 }
 
 fun generateClass(simpleName: String, layoutElements: List<LayoutElementModel>): TypeSpec? {
-    val clazz = TypeSpec.classBuilder(simpleName).addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+    val clazz = TypeSpec.classBuilder(simpleName).addModifiers(Modifier.PUBLIC)
 
     val constructor = MethodSpec.constructorBuilder()
             .addModifiers(Modifier.PUBLIC)
@@ -24,7 +24,7 @@ fun generateClass(simpleName: String, layoutElements: List<LayoutElementModel>):
 
     layoutElements.forEach {
         clazz.addField(it.getPoetClassName(), it.viewId, Modifier.PUBLIC)
-        constructor.addStatement("\$L = (\$T)view.findViewById<\$T>(R.id.\$L)", it.viewId, it.getPoetClassName(), it.getPoetClassName(), it.viewId)
+        constructor.addStatement("\$L = (\$T) view.findViewById(R.id.\$L)", it.viewId, it.getPoetClassName(), it.viewId)
     }
 
     clazz.addMethod(constructor.build())
