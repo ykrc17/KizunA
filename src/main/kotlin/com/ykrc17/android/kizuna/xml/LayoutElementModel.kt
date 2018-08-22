@@ -9,8 +9,14 @@ class LayoutElementModel(clazz: String, id: String) {
 
     init {
         val dotIndex = clazz.lastIndexOf('.')
+        // 原生控件
         if (dotIndex < 0) {
-            packageName = if (clazz.endsWith("Layout")) "android.widget" else "android.view"
+            packageName = when (clazz) {
+                "View", "ViewStub" ->
+                    "android.view"
+                else ->
+                    "android.widget"
+            }
             simpleName = clazz
         } else {
             packageName = clazz.substring(0, dotIndex)
