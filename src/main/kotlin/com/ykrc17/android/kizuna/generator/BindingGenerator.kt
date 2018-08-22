@@ -59,7 +59,7 @@ fun generateBindingClassName(originFileName: String): String {
 
 fun generateLayoutResMethod(originFileName: String): MethodSpec? {
     return MethodSpec.methodBuilder("getLayoutRes")
-            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+            .addModifiers(Modifier.PUBLIC)
             .returns(TypeName.INT)
             .addStatement("return R.layout.$originFileName")
             .build()
