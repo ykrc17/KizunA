@@ -16,18 +16,25 @@ fun generateClass(originFileName: String, layoutElements: List<LayoutElementMode
     val clazz = TypeSpec.classBuilder(generateBindingClassName(originFileName))
             .addModifiers(Modifier.PUBLIC)
 
-    val constructor = MethodSpec.constructorBuilder()
+    val bindMethod = MethodSpec.methodBuilder("bind")
             .addModifiers(Modifier.PUBLIC)
             .addParameter(ClassName.get("android.view", "View"), "view")
 
     layoutElements.forEach {
         clazz.addField(it.getPoetClassName(), it.viewId, Modifier.PUBLIC)
-        constructor.addStatement("\$L = (\$T) view.findViewById(R.id.\$L)", it.viewId, it.getPoetClassName(), it.viewId)
+        bindMethod.addStatement("\$L = (\$T) view.findViewById(R.id.\$L)", it.viewId, it.getPoetClassName(), it.viewId)
     }
 
-    clazz.addMethod(generateLayoutResMethod(originFileName))
+    clazz.addMethod(bindMethod.build())
 
-    clazz.addMethod(constructor.build())
+    // 构造函数
+    clazz.addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build())
+    clazz.addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC)
+            .addParameter(ClassName.get("android.view", "View"), "view")
+            .addStatement("bind(view)")
+            .build())
+
+    clazz.addMethod(generateLayoutResMethod(originFileName))
 
     return clazz.build()
 }
