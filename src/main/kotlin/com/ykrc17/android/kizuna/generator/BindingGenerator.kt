@@ -6,14 +6,16 @@ import java.io.File
 import javax.lang.model.element.Modifier
 
 
-fun generateBinding(layoutElements: List<LayoutElementModel>, packageName: String, originFileName: String, targetFile: File) {
-    val javaFile = JavaFile.builder(packageName, generateClass(originFileName, layoutElements)).build()
+fun generateBinding(layoutElements: List<LayoutElementModel>, packageName: String, rPackageName: String, rFileName: String, targetFile: File) {
+    val javaFile = JavaFile.builder(packageName, generateClass(rPackageName, rFileName, layoutElements)).build()
 
     javaFile.writeTo(targetFile)
 }
 
-fun generateClass(originFileName: String, layoutElements: List<LayoutElementModel>): TypeSpec? {
-    val clazz = TypeSpec.classBuilder(generateBindingClassName(originFileName))
+fun generateClass(rPackageName: String, layoutFileName: String, layoutElements: List<LayoutElementModel>): TypeSpec? {
+    val rClassName = ClassName.get(rPackageName, "R")
+
+    val clazz = TypeSpec.classBuilder(generateBindingClassName(layoutFileName))
             .addModifiers(Modifier.PUBLIC)
 
     val bindMethod = MethodSpec.methodBuilder("bind")
@@ -22,7 +24,7 @@ fun generateClass(originFileName: String, layoutElements: List<LayoutElementMode
 
     layoutElements.forEach {
         clazz.addField(it.getPoetClassName(), it.viewId, Modifier.PUBLIC)
-        bindMethod.addStatement("\$L = (\$T) view.findViewById(R.id.\$L)", it.viewId, it.getPoetClassName(), it.viewId)
+        bindMethod.addStatement("${it.viewId} = (\$T) view.findViewById(\$T.id.${it.viewId})", it.getPoetClassName(), rClassName)
     }
 
     clazz.addMethod(bindMethod.build())
@@ -34,7 +36,7 @@ fun generateClass(originFileName: String, layoutElements: List<LayoutElementMode
             .addStatement("bind(view)")
             .build())
 
-    clazz.addMethod(generateLayoutResMethod(originFileName))
+    clazz.addMethod(generateLayoutResMethod(rClassName, layoutFileName))
 
     return clazz.build()
 }
@@ -57,10 +59,10 @@ fun generateBindingClassName(originFileName: String): String {
     return result.toString()
 }
 
-fun generateLayoutResMethod(originFileName: String): MethodSpec? {
+fun generateLayoutResMethod(rClassName: ClassName, originFileName: String): MethodSpec? {
     return MethodSpec.methodBuilder("getLayoutRes")
             .addModifiers(Modifier.PUBLIC)
             .returns(TypeName.INT)
-            .addStatement("return R.layout.$originFileName")
+            .addStatement("return \$T.layout.$originFileName", rClassName)
             .build()
 }
