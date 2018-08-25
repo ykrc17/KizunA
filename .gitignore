@@ -1,5 +1,6 @@
 /.gradle
 /.idea
 /build
+/scripts/*.jar
 
 .DS_Store
