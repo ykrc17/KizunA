@@ -1,18 +1,18 @@
 package com.ykrc17.android.kizuna.generator
 
 import com.squareup.javapoet.*
-import com.ykrc17.android.kizuna.xml.LayoutElementModel
+import com.ykrc17.android.kizuna.entity.LayoutElementEntity
 import java.io.File
 import javax.lang.model.element.Modifier
 
 
-fun generateBinding(layoutElements: List<LayoutElementModel>, packageName: String, rPackageName: String, rFileName: String, targetFile: File) {
+fun generateBinding(layoutElements: List<LayoutElementEntity>, packageName: String, rPackageName: String, rFileName: String, targetFile: File) {
     val javaFile = JavaFile.builder(packageName, generateClass(rPackageName, rFileName, layoutElements)).build()
 
     javaFile.writeTo(targetFile)
 }
 
-fun generateClass(rPackageName: String, layoutFileName: String, layoutElements: List<LayoutElementModel>): TypeSpec? {
+fun generateClass(rPackageName: String, layoutFileName: String, layoutElements: List<LayoutElementEntity>): TypeSpec? {
     val rClassName = ClassName.get(rPackageName, "R")
 
     val clazz = TypeSpec.classBuilder(generateBindingClassName(layoutFileName))
@@ -23,8 +23,8 @@ fun generateClass(rPackageName: String, layoutFileName: String, layoutElements: 
             .addParameter(ClassName.get("android.view", "View"), "view")
 
     layoutElements.forEach {
-        clazz.addField(it.getPoetClassName(), it.viewId, Modifier.PUBLIC)
-        bindMethod.addStatement("${it.viewId} = (\$T) view.findViewById(\$T.id.${it.viewId})", it.getPoetClassName(), rClassName)
+        clazz.addField(it.viewClass.toPoetClassName(), it.viewId, Modifier.PUBLIC)
+        bindMethod.addStatement("${it.viewId} = (\$T) view.findViewById(\$T.id.${it.viewId})", it.viewClass.toPoetClassName(), rClassName)
     }
 
     clazz.addMethod(bindMethod.build())
