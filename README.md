@@ -1,14 +1,17 @@
 ## Kizuna
 > 嗨，多磨。我是View绑定生成工具KizunaAndroid  
 
+本项目的目的是把开发人员从`findViewById`的地狱中拯救出来  
+View绑定的代码编写机械重复、维护困难，完全可以由代码生成（或者让实习生去写
 
-## 目的
-View绑定的代码编写机械重复、后续难以维护，需要把大家从`findViewById`的地狱中拯救出来  
-之前使用过一些View绑定工具，像是ButterKnife和kotlin-android-extensions，但是他们有一定的局限性，这个之后再讲。
+本项目有以下特点
+- 有效减少代码编写量 <font color=gray>因为是Java代码生成器</font>
+- 支持Java <font color=gray>因为是Java代码生成器</font>
+- 如果哪天不想用了，移除成本极低 <font color=gray>因为是Java代码生成器</font>
 
-## 优点
-- 有效减少代码编写量
-- 对项目0侵入，而且支持Java。因为是Java代码生成器
+## 示例
+![](imgs/example.png)
+> 左边是xml，右边是生成代码
 
 ## 使用
 ```
