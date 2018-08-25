@@ -7,6 +7,11 @@ import java.io.File
 class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
     private val pairList = arrayListOf<LayoutElementEntity>()
 
+    fun readPackage(fallback: () -> String): String {
+        rootElement.attributes().find { it.qualifiedName == "tools:package" }?.also { return it.text }
+        return fallback()
+    }
+
     fun readElements(): List<LayoutElementEntity> {
         readElementsRecursively(rootElement)
         return pairList
