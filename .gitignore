@@ -2,5 +2,6 @@
 /.idea
 /build
 /scripts/*.jar
+/out
 
 .DS_Store
