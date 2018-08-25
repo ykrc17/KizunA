@@ -1,68 +1,52 @@
 package com.ykrc17.android.kizuna.generator
 
 import com.squareup.javapoet.*
-import com.ykrc17.android.kizuna.entity.LayoutElementEntity
 import java.io.File
 import javax.lang.model.element.Modifier
 
-
-fun generateBinding(layoutElements: List<LayoutElementEntity>, packageName: String, rPackageName: String, rFileName: String, targetFile: File) {
-    val javaFile = JavaFile.builder(packageName, generateClass(rPackageName, rFileName, layoutElements)).build()
-
-    javaFile.writeTo(targetFile)
-}
-
-fun generateClass(rPackageName: String, layoutFileName: String, layoutElements: List<LayoutElementEntity>): TypeSpec? {
-    val rClassName = ClassName.get(rPackageName, "R")
-
-    val clazz = TypeSpec.classBuilder(generateBindingClassName(layoutFileName))
-            .addModifiers(Modifier.PUBLIC)
-
-    val bindMethod = MethodSpec.methodBuilder("bind")
-            .addModifiers(Modifier.PUBLIC)
-            .addParameter(ClassName.get("android.view", "View"), "view")
-
-    layoutElements.forEach {
-        clazz.addField(it.viewClass.toPoetClassName(), it.viewId, Modifier.PUBLIC)
-        bindMethod.addStatement("${it.viewId} = (\$T) view.findViewById(\$T.id.${it.viewId})", it.viewClass.toPoetClassName(), rClassName)
+class BindingGenerator {
+    fun generate(args: Arguments, packageName: String, srcDir: File) {
+        val javaFile = JavaFile.builder(packageName, bindClass(args)).build()
+        javaFile.writeTo(srcDir)
     }
 
-    clazz.addMethod(bindMethod.build())
+    private fun bindClass(args: Arguments): TypeSpec? {
+        return TypeSpec.classBuilder(args.bindingClassName).apply {
+            addModifiers(Modifier.PUBLIC)
+            args.layoutElements.forEach {
+                addField(it.viewClass.toPoetClassName(), it.viewId, Modifier.PUBLIC)
+            }
 
-    // 构造函数
-    clazz.addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build())
-    clazz.addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC)
-            .addParameter(ClassName.get("android.view", "View"), "view")
-            .addStatement("bind(view)")
-            .build())
+            public("bind") {
+                addParameter(ClassName.get("android.view", "View"), "view")
+                args.layoutElements.forEach {
+                    addStatement("${it.viewId} = (\$T) view.findViewById(\$T.id.${it.viewId})", it.viewClass.toPoetClassName(), args.rClass.toPoetClassName())
+                }
+            }
 
-    clazz.addMethod(generateLayoutResMethod(rClassName, layoutFileName))
+            // 构造函数
+            constructor { }
+            constructor {
+                addParameter(ClassName.get("android.view", "View"), "view")
+                addStatement("bind(view)")
+            }
 
-    return clazz.build()
-}
-
-fun generateBindingClassName(originFileName: String): String {
-    val result = StringBuilder()
-    var nextIsUpper = true
-
-    originFileName.forEach {
-        if (it == '_') {
-            nextIsUpper = true
-            return@forEach
-        } else {
-            result.append(if (nextIsUpper) it.toUpperCase() else it)
-            nextIsUpper = false
-        }
+            public("getLayoutRes") {
+                returns(TypeName.INT)
+                addStatement("return \$T.layout.${args.layoutResId}", args.rClass.toPoetClassName())
+            }
+        }.build()
     }
 
-    result.append("Binding")
-    return result.toString()
-}
+    private fun TypeSpec.Builder.constructor(block: MethodSpec.Builder.() -> Unit) {
+        val builder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC)
+        block(builder)
+        addMethod(builder.build())
+    }
 
-fun generateLayoutResMethod(rClassName: ClassName, originFileName: String): MethodSpec? {
-    return MethodSpec.methodBuilder("getLayoutRes")
-            .addModifiers(Modifier.PUBLIC)
-            .returns(TypeName.INT)
-            .addStatement("return \$T.layout.$originFileName", rClassName)
-            .build()
+    private fun TypeSpec.Builder.public(name: String, block: MethodSpec.Builder.() -> Unit) {
+        val builder = MethodSpec.methodBuilder(name).addModifiers(Modifier.PUBLIC)
+        block(builder)
+        addMethod(builder.build())
+    }
 }
