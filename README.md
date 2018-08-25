@@ -5,16 +5,16 @@
 View绑定的代码编写机械重复、维护困难，完全可以由代码生成（或者让实习生去写
 
 本项目有以下特点
-- 有效减少代码编写量 <span style="color:gray">因为是Java代码生成器</span>
-- 支持Java <span style="color:gray">因为是Java代码生成器</span>
-- 如果哪天不想用了，移除成本极低 <span style="color:gray">因为是Java代码生成器</span>
+- 有效减少代码编写量 // 因为是Java代码生成器
+- 支持Java // 因为是Java代码生成器
+- 如果哪天不想用了，移除成本极低 // 因为是Java代码生成器
 
 ## 示例
 ![](imgs/example.png)
 > 左边是xml，右边是生成代码
 
 ## 如何使用
-#### 1、下载最新的jar包[releases](releases)
+#### 1、下载最新的jar包[releases](../../releases)
 
 #### 2、运行以下命令，默认在jar包所在目录生成java文件
 ```
