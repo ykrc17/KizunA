@@ -1,27 +1,33 @@
 package com.ykrc17.android.kizuna.xml
 
 import com.ykrc17.android.kizuna.entity.LayoutElementEntity
-import org.dom4j.Element
 import java.io.File
+import javax.xml.stream.XMLStreamReader
 
 class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
+
+    private var packageName: String? = null
     private val pairList = arrayListOf<LayoutElementEntity>()
 
-    fun readPackage(fallback: () -> String): String {
-        rootElement.attributes().find { it.qualifiedName == "tools:package" }?.also { return it.text }
+    fun getPackage(fallback: () -> String): String {
+        packageName?.also { return it }
         return fallback()
     }
 
-    fun readElements(): List<LayoutElementEntity> {
-        readElementsRecursively(rootElement)
+    fun getElements(): List<LayoutElementEntity> {
         return pairList
     }
 
-    private fun readElementsRecursively(element: Element) {
-        val attr = element.attributes().find { it.qualifiedName == "android:id" }
-        attr?.apply {
-            pairList.add(LayoutElementEntity(element.name, text))
+    override fun onVisitElement(reader: XMLStreamReader) {
+        if (packageName == null) {
+            reader.getAttributeValue("http://schemas.android.com/tools", "package")
+                    ?.also {
+                        packageName = it
+                    }
         }
-        element.elements().forEach(::readElementsRecursively)
+        reader.getAttributeValue("http://schemas.android.com/apk/res/android", "id")
+                ?.also {
+                    pairList.add(LayoutElementEntity(reader.localName, it))
+                }
     }
 }

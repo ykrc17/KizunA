@@ -25,13 +25,14 @@ fun main(args: Array<String>) {
     val projectStructure = ProjectStructure(layoutXmlFile.parentFile)
 
     val layoutReader = LayoutXmlReader(layoutXmlFile)
-    val layoutElements = layoutReader.readElements()
+    layoutReader.visitElements()
+    val layoutElements = layoutReader.getElements()
     val layoutResId = layoutXmlFile.nameWithoutExtension
-    val packageName = layoutReader.readPackage { line.getOptionValue("p", "") }
+    val packageName = layoutReader.getPackage { line.getOptionValue("p", "") }
 
     var rPackageName = ""
     projectStructure.manifest?.also {
-        rPackageName = ManifestXmlReader(it).readPackageName()
+        rPackageName = ManifestXmlReader(it).packageName
     }
 
     var srcDir = projectStructure.readSrcDir {

@@ -35,7 +35,6 @@ shadowJar {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile "org.dom4j:dom4j:2.1.1"
     compile "com.squareup:javapoet:1.11.1"
     compile "commons-cli:commons-cli:1.4"
 }

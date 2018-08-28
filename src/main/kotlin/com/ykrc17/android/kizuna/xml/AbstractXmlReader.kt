@@ -1,15 +1,29 @@
 package com.ykrc17.android.kizuna.xml
 
-import org.dom4j.Element
-import org.dom4j.io.SAXReader
 import java.io.File
+import java.io.FileReader
+import javax.xml.stream.XMLInputFactory
+import javax.xml.stream.XMLStreamConstants
+import javax.xml.stream.XMLStreamReader
 
 abstract class AbstractXmlReader(file: File) {
-    val rootElement: Element
+    private val reader: XMLStreamReader
+    protected var isVisitFinish = false
 
     init {
-        val reader = SAXReader()
-        val document = reader.read(file)
-        rootElement = document.rootElement
+        reader = XMLInputFactory.newInstance().createXMLStreamReader(FileReader(file))
+    }
+
+    protected abstract fun onVisitElement(reader: XMLStreamReader)
+
+    public fun visitElements() {
+        reader.apply {
+            while (hasNext() && !isVisitFinish) {
+                if (next() == XMLStreamConstants.START_ELEMENT) {
+                    onVisitElement(reader)
+                }
+            }
+        }
+        reader.close()
     }
 }
