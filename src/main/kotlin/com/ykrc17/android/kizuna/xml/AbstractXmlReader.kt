@@ -3,24 +3,20 @@ package com.ykrc17.android.kizuna.xml
 import java.io.File
 import java.io.FileReader
 import javax.xml.stream.XMLInputFactory
-import javax.xml.stream.XMLStreamConstants
-import javax.xml.stream.XMLStreamReader
+import javax.xml.stream.events.StartElement
 
 abstract class AbstractXmlReader(file: File) {
-    private val reader: XMLStreamReader
+    private val reader = XMLInputFactory.newInstance().createXMLEventReader(FileReader(file))
     protected var isVisitFinish = false
 
-    init {
-        reader = XMLInputFactory.newInstance().createXMLStreamReader(FileReader(file))
-    }
+    protected abstract fun onVisitElement(element: StartElement)
 
-    protected abstract fun onVisitElement(reader: XMLStreamReader)
-
-    public fun visitElements() {
+    fun visitElements() {
         reader.apply {
             while (hasNext() && !isVisitFinish) {
-                if (next() == XMLStreamConstants.START_ELEMENT) {
-                    onVisitElement(reader)
+                val event = nextEvent()
+                if (event.isStartElement) {
+                    onVisitElement(event.asStartElement())
                 }
             }
         }

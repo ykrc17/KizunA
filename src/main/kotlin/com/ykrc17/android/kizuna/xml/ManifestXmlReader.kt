@@ -1,15 +1,16 @@
 package com.ykrc17.android.kizuna.xml
 
 import java.io.File
-import javax.xml.stream.XMLStreamReader
+import javax.xml.namespace.QName
+import javax.xml.stream.events.StartElement
 
 class ManifestXmlReader(file: File) : AbstractXmlReader(file) {
     var packageName = ""
         private set
 
-    override fun onVisitElement(reader: XMLStreamReader) {
-        reader.getAttributeValue(null, "package")?.also {
-            packageName = it
+    override fun onVisitElement(element: StartElement) {
+        element.getAttributeByName(QName(null, "package"))?.also {
+            packageName = it.value
             isVisitFinish = true
         }
     }

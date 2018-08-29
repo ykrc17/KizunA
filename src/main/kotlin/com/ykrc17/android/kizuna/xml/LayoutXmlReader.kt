@@ -2,7 +2,8 @@ package com.ykrc17.android.kizuna.xml
 
 import com.ykrc17.android.kizuna.entity.LayoutElementEntity
 import java.io.File
-import javax.xml.stream.XMLStreamReader
+import javax.xml.namespace.QName
+import javax.xml.stream.events.StartElement
 
 class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
 
@@ -18,16 +19,16 @@ class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
         return pairList
     }
 
-    override fun onVisitElement(reader: XMLStreamReader) {
+    override fun onVisitElement(element: StartElement) {
         if (packageName == null) {
-            reader.getAttributeValue("http://schemas.android.com/tools", "package")
+            element.getAttributeByName(QName("http://schemas.android.com/tools", "package"))
                     ?.also {
-                        packageName = it
+                        packageName = it.value
                     }
         }
-        reader.getAttributeValue("http://schemas.android.com/apk/res/android", "id")
+        element.getAttributeByName(QName("http://schemas.android.com/apk/res/android", "id"))
                 ?.also {
-                    pairList.add(LayoutElementEntity(reader.localName, it))
+                    pairList.add(LayoutElementEntity(element.name.localPart, it.value))
                 }
     }
 }
