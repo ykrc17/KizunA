@@ -18,25 +18,26 @@ repositories {
 }
 
 shadowJar {
+    baseName = 'kizuna'
     classifier = null
     version = null
     manifest {
-        attributes "Main-Class": "com.ykrc17.android.kizuna.MainKt"
+        attributes "Main-Class": "com.ykrc17.android.kizuna.cli.MainKt"
     }
     doLast {
         copy {
             from("$buildDir/libs") {
                 include "*.jar"
             }
-            into "$projectDir/scripts"
+            into "$rootProject.rootDir/scripts"
         }
     }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile "com.squareup:javapoet:1.11.1"
     compile "commons-cli:commons-cli:1.4"
+    compile project(':kizuna-core')
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8

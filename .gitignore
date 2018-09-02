@@ -1,7 +1,7 @@
 /.gradle
 /.idea
-/build
 /scripts/*.jar
-/out
+**/build
+**/out
 
 .DS_Store

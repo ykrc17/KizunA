@@ -5,30 +5,16 @@ import com.ykrc17.android.kizuna.generator.BindingGenerator
 import com.ykrc17.android.kizuna.gradle.PropertiesReader
 import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
-import org.apache.commons.cli.DefaultParser
-import org.apache.commons.cli.HelpFormatter
-import org.apache.commons.cli.Options
 import java.io.File
 
-fun main(args: Array<String>) {
-    val options = Options()
-    options.addOption("d", "src-dir", true, "source directory")
-    options.addOption("p", "package", true, "generated java class's package name")
-    options.addOption("h", "help", false, "help")
-    val line = DefaultParser().parse(options, args)
-    if (line.argList.isEmpty() || line.hasOption("h")) {
-        HelpFormatter().printHelp("java -jar kizuna.jar [options] [layoutXml]", options)
-        return
-    }
-
-    val layoutXmlFile = File(line.argList[0])
+fun kizuna(layoutXmlFile: File, inSrcDir: File?, inTargetPackage: String?) {
     val projectStructure = ProjectStructure(layoutXmlFile.parentFile)
 
     val layoutReader = LayoutXmlReader(layoutXmlFile)
     layoutReader.visitElements()
     val layoutElements = layoutReader.getElements()
     val layoutResId = layoutXmlFile.nameWithoutExtension
-    val packageName = layoutReader.getPackage { line.getOptionValue("p", "") }
+    val packageName = inTargetPackage ?: layoutReader.getPackage()
 
     var rPackageName = ""
     projectStructure.manifest?.also {
@@ -37,9 +23,7 @@ fun main(args: Array<String>) {
         rPackageName = reader.packageName
     }
 
-    var srcDir = projectStructure.readSrcDir {
-        File(line.getOptionValue("d", ""))
-    }
+    var srcDir = inSrcDir ?: projectStructure.readSrcDir()
 
     val bindingArgs = Arguments(toBindingClassName(layoutResId),
             layoutElements,
@@ -48,7 +32,7 @@ fun main(args: Array<String>) {
     BindingGenerator().generate(bindingArgs, packageName, srcDir)
 }
 
-class ProjectStructure {
+internal class ProjectStructure {
     var manifest: File? = null
     var properties: File? = null
     var buildFile: File? = null
@@ -74,17 +58,17 @@ class ProjectStructure {
         findFiles(dir.parentFile)
     }
 
-    fun readSrcDir(fallback: () -> File): File {
+    fun readSrcDir(): File {
         if (properties != null && buildFile != null && properties!!.exists() && buildFile!!.exists()) {
             PropertiesReader(properties!!).read("srcDir")?.also {
                 return File(buildFile!!.parentFile, it)
             }
         }
-        return fallback()
+        return File("")
     }
 }
 
-fun toBindingClassName(layoutFileName: String): String {
+internal fun toBindingClassName(layoutFileName: String): String {
     val result = StringBuilder()
     var nextIsUpper = true
 

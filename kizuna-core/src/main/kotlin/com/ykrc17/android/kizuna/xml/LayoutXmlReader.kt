@@ -10,9 +10,9 @@ class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
     private var packageName: String? = null
     private val pairList = arrayListOf<LayoutElementEntity>()
 
-    fun getPackage(fallback: () -> String): String {
+    fun getPackage(): String {
         packageName?.also { return it }
-        return fallback()
+        return ""
     }
 
     fun getElements(): List<LayoutElementEntity> {
