@@ -32,7 +32,9 @@ fun main(args: Array<String>) {
 
     var rPackageName = ""
     projectStructure.manifest?.also {
-        rPackageName = ManifestXmlReader(it).packageName
+        val reader = ManifestXmlReader(it)
+        reader.visitElements()
+        rPackageName = reader.packageName
     }
 
     var srcDir = projectStructure.readSrcDir {
