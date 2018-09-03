@@ -9,49 +9,64 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
 - 支持Java // 因为是Java代码生成器
 - 如果哪天不想用了，移除成本极低 // 因为是Java代码生成器
 
-## 示例
+### 示例
 > 左边是xml，右边是生成代码
 
 ![](imgs/example.png)
 
-## 如何使用
-#### 1、下载最新的jar包[releases](../../releases)
+### 使用IDE插件（推荐）
+0. 下载最新的jar包[Releases](../../releases)
 
-#### 2、安装IDE插件(kizuna-idea-plugin.jar)，或者运行命令
-```
-# AndroidStudio 或 IDEA
-Code -> Generate -> Kizuna
+0. 安装IDE插件(kizuna-idea-plugin.jar)
+    ```
+    # Mac/Linux
+    File -> Preferences -> Plugins -> Install plugin from disk...
+    
+    # Windows
+    File -> Settings -> Plugins -> Install plugin from disk...
+    ```
+0. 执行命令
+    ```
+    # AndroidStudio 或 IDEA
+    右键 -> Generate... -> Kizuna
+    Code -> Generate... -> Kizuna
+    ```
+0. 配置参数
+    kizuna有两个必需的参数
+    - srcDir: 源代码的根目录绝对路径
+    - packageName: 代码生成产物xxxBinding.java的包名
+    
+    在build.gradle同一目录中创建kizuna.properties
+    ```
+    # srcDir=源代码根目录相对于build.gradle的相对路径
+    srcDir=main/src/java
+    ```
+    在xml根元素中添加属性
+    ```
+    # tools:package="包名"
+    tools:package="com.ykrc17.example.layout"
+    ```
+### 使用命令行
+0. 下载最新的jar包[Releases](../../releases)
 
-# mac/linux
-sh kizuna.sh [layoutXml]
+0. 运行命令
+    ```
+    # Mac/Linux
+    sh kizuna.sh [layoutXml]
+    
+    # windows
+    kizuna.bat [layoutXml]
+    ```
+0. 配置参数
+    ```
+    sh kizuna.sh [layoutXml] -d [srcDir] -p [packageName]
+    ```
 
-# windows
-kizuna.bat [layoutXml]
-```
-#### 3、配置参数(IDE或命令行)
-kizuna有两个必需的参数
-- srcDir: 源代码的根目录绝对路径
-- packageName: 代码生成产物xxxBinding.java的包名
+### TODO
+- 支持相对包名('.'开头的包名)
+- IDE配置srcDir
 
-在build.gradle同一目录中创建kizuna.properties
-```
-# srcDir=源代码根目录相对于build.gradle的相对路径
-srcDir=main/src/java
-```
-在xml根元素中添加属性
-```
-# tools:package="包名"
-tools:package="com.ykrc17.example.layout"
-```
-#### 4、配置参数(仅命令行)
-```
-sh kizuna.sh [layoutXml] -d [srcDir] -p [packageName]
-```
-
-## TODO
-- IDEA插件
-
-## 竞品分析（笑
+### 竞品分析（笑
 说是竞品，其实Kizuna也就自己用用，不打算传播。  
 说一下ButterKnife和kotlin-android-extensions为什么让我不爽
 
