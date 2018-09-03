@@ -1,5 +1,6 @@
-/.gradle
-/.idea
+/.gradle/*
+/.idea/*
+!/.idea/modules.xml
 /scripts/*.jar
 **/build
 **/out

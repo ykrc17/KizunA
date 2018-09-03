@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Kizuna.iml" filepath="$PROJECT_DIR$/.idea/Kizuna.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kizuna-cli/kizuna-cli.iml" filepath="$PROJECT_DIR$/.idea/modules/kizuna-cli/kizuna-cli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kizuna-core/kizuna-core.iml" filepath="$PROJECT_DIR$/.idea/modules/kizuna-core/kizuna-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kizuna-idea-plugin/kizuna-idea-plugin.iml" filepath="$PROJECT_DIR$/kizuna-idea-plugin/kizuna-idea-plugin.iml" />
+    </modules>
+  </component>
+</project>

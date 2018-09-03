@@ -3,11 +3,12 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.refactoring.RefactoringActionHandler
 import com.intellij.refactoring.actions.BaseRefactoringAction
+import com.ykrc17.android.kizuna.kizuna
+import java.io.File
 
 class KizunaAction : BaseRefactoringAction() {
 
@@ -28,8 +29,7 @@ class KizunaAction : BaseRefactoringAction() {
             }
 
             private fun invoke(project: Project, psiFile: PsiFile, context: DataContext) {
-                // TODO 实现kizuna
-                Messages.showMessageDialog(project, psiFile.virtualFile.path, "", Messages.getInformationIcon())
+                kizuna(File(psiFile.virtualFile.path), null, null)
             }
         }
     }

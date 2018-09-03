@@ -64,7 +64,7 @@ internal class ProjectStructure {
                 return File(buildFile!!.parentFile, it)
             }
         }
-        return File("")
+        return buildFile!!.parentFile
     }
 }
 

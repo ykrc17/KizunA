@@ -1,19 +1,18 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
-    <name>Plugin display name here</name>
+    <id>com.ykrc17.idea.kizuna</id>
+    <name>Kizuna</name>
     <version>1.0</version>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="ykrc17@163.com">ykrc17</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      嗨，多磨。我是View绑定生成工具KizunaAndroid
     ]]></description>
 
-    <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
-    </change-notes>
+    <!--<change-notes><![CDATA[-->
+    <!--Add change notes here.<br>-->
+    <!--<em>most HTML tags may be used</em>-->
+    <!--]]>-->
+    <!--</change-notes>-->
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="173.0"/>
@@ -31,7 +30,7 @@
     <actions>
         <!-- Add your actions here -->
         <action id="Kizuna" class="KizunaAction" text="Kizuna">
-            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
     </actions>
 
