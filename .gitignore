@@ -1,6 +1,7 @@
 /.gradle/*
 /.idea/*
 !/.idea/modules.xml
+/classes
 /scripts/*.jar
 **/build
 **/out

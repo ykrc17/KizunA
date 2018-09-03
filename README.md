@@ -17,23 +17,22 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
 ## 如何使用
 #### 1、下载最新的jar包[releases](../../releases)
 
-#### 2、运行以下命令，默认在jar包所在目录生成java文件
+#### 2、安装IDE插件(kizuna-idea-plugin.jar)，或者运行命令
 ```
+# AndroidStudio 或 IDEA
+Code -> Generate -> Kizuna
+
 # mac/linux
 sh kizuna.sh [layoutXml]
 
 # windows
 kizuna.bat [layoutXml]
 ```
-#### 3、指定生成目录(命令行)
-```
-sh kizuna.sh [layoutXml] -d [srcDir] -p [packageName]
-```
-两个参数缺一不可
+#### 3、配置参数(IDE或命令行)
+kizuna有两个必需的参数
 - srcDir: 源代码的根目录绝对路径
-- packageName: xxxBinding.java的包名
+- packageName: 代码生成产物xxxBinding.java的包名
 
-#### 4、指定生成目录(项目文件)
 在build.gradle同一目录中创建kizuna.properties
 ```
 # srcDir=源代码根目录相对于build.gradle的相对路径
@@ -43,6 +42,10 @@ srcDir=main/src/java
 ```
 # tools:package="包名"
 tools:package="com.ykrc17.example.layout"
+```
+#### 4、配置参数(仅命令行)
+```
+sh kizuna.sh [layoutXml] -d [srcDir] -p [packageName]
 ```
 
 ## TODO
