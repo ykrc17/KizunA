@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin url="https://github.com/ykrc17/Kizuna">
     <id>com.ykrc17.idea.kizuna</id>
     <name>Kizuna</name>
     <version>1.0</version>
@@ -24,12 +24,16 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <projectService serviceImplementation="com.ykrc17.android.kizuna.config.ConfigStorage"/>
+        <projectConfigurable instance="com.ykrc17.android.kizuna.config.ConfigController"/>
     </extensions>
+
+    <project-components>
+    </project-components>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="Kizuna" class="KizunaAction" text="Kizuna">
+        <action id="Kizuna" class="com.ykrc17.android.kizuna.KizunaAction" text="Kizuna">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
     </actions>

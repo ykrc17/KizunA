@@ -3,7 +3,8 @@
 !/.idea/modules.xml
 /classes
 /scripts/*.jar
+/scripts/*.zip
 **/build
 **/out
 
-.DS_Store
+*.DS_Store
