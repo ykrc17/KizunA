@@ -4,16 +4,19 @@ import com.ykrc17.android.kizuna.entity.ClassEntity
 import com.ykrc17.android.kizuna.entity.LayoutElementEntity
 
 class Arguments {
-    val bindingClassName: String
+    val outputPackageName: String
+    val outputClassName: String
     val layoutElements: List<LayoutElementEntity>
     val layoutResId: String
     val rClass: ClassEntity
 
-    constructor(bindingClassName: String, layoutElements: List<LayoutElementEntity>, layoutResId: String)
-            : this(bindingClassName, layoutElements, layoutResId, "")
-
-    constructor(bindingClassName: String, layoutElements: List<LayoutElementEntity>, layoutResId: String, rPackageName: String) {
-        this.bindingClassName = bindingClassName
+    constructor(outputPackageName: String, bindingClassName: String, layoutElements: List<LayoutElementEntity>, layoutResId: String, rPackageName: String = "") {
+        if (outputPackageName.startsWith(".")) {
+            this.outputPackageName = rPackageName + outputPackageName
+        } else {
+            this.outputPackageName = outputPackageName
+        }
+        this.outputClassName = bindingClassName
         this.layoutElements = layoutElements
         this.layoutResId = layoutResId
         this.rClass = ClassEntity(rPackageName, "R")

@@ -20,5 +20,5 @@ fun main(args: Array<String>) {
     val layoutXmlFile = File(line.argList[0])
     val inSrcDir: File? = line.getOptionValue("d")?.let { File(it) }
     val targetPackage: String? = line.getOptionValue("p")
-    kizuna(layoutXmlFile, inSrcDir, targetPackage)
+    kizuna(layoutXmlFile, inSrcDir, "", targetPackage) {}
 }

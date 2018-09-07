@@ -5,13 +5,13 @@ import java.io.File
 import javax.lang.model.element.Modifier
 
 class BindingGenerator {
-    fun generate(args: Arguments, packageName: String, srcDir: File, callback: (File) -> Unit) {
-        val javaFile = JavaFile.builder(packageName, bindClass(args)).build()
+    fun generate(args: Arguments, srcDir: File, callback: (File) -> Unit) {
+        val javaFile = JavaFile.builder(args.outputPackageName, bindClass(args)).build()
         javaFile.writeTo(srcDir, callback)
     }
 
     private fun bindClass(args: Arguments): TypeSpec? {
-        return TypeSpec.classBuilder(args.bindingClassName).apply {
+        return TypeSpec.classBuilder(args.outputClassName).apply {
             addModifiers(Modifier.PUBLIC)
             args.layoutElements.forEach {
                 addField(it.viewClass.toPoetClassName(), it.viewId, Modifier.PUBLIC)
@@ -56,7 +56,7 @@ class BindingGenerator {
         // copy from com.squareup.javapoet.JavaFile
         var outputDirectory = directory
         if (!packageName.isEmpty()) {
-            for (packageComponent in packageName.split("\\.")) {
+            for (packageComponent in packageName.split(".")) {
                 outputDirectory = outputDirectory.resolve(packageComponent)
             }
         }
