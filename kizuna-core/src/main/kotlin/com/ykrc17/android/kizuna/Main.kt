@@ -7,7 +7,7 @@ import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
 import java.io.File
 
-fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, inTargetPackage: String?) {
+fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, inTargetPackage: String?, callback: (File) -> Unit) {
     val projectStructure = ProjectStructure(layoutXmlFile.parentFile)
 
     val layoutReader = LayoutXmlReader(layoutXmlFile)
@@ -29,7 +29,7 @@ fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, 
             layoutElements,
             layoutResId,
             rPackageName)
-    BindingGenerator().generate(bindingArgs, packageName, srcDir)
+    BindingGenerator().generate(bindingArgs, packageName, srcDir, callback)
 }
 
 internal class ProjectStructure {

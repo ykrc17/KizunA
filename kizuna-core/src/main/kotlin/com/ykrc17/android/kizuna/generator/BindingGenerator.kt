@@ -5,9 +5,9 @@ import java.io.File
 import javax.lang.model.element.Modifier
 
 class BindingGenerator {
-    fun generate(args: Arguments, packageName: String, srcDir: File) {
+    fun generate(args: Arguments, packageName: String, srcDir: File, callback: (File) -> Unit) {
         val javaFile = JavaFile.builder(packageName, bindClass(args)).build()
-        javaFile.writeTo(srcDir)
+        javaFile.writeTo(srcDir, callback)
     }
 
     private fun bindClass(args: Arguments): TypeSpec? {
@@ -48,5 +48,18 @@ class BindingGenerator {
         val builder = MethodSpec.methodBuilder(name).addModifiers(Modifier.PUBLIC)
         block(builder)
         addMethod(builder.build())
+    }
+
+    private fun JavaFile.writeTo(directory: File, callback: (File) -> Unit) {
+        writeTo(directory)
+
+        // copy from com.squareup.javapoet.JavaFile
+        var outputDirectory = directory
+        if (!packageName.isEmpty()) {
+            for (packageComponent in packageName.split("\\.")) {
+                outputDirectory = outputDirectory.resolve(packageComponent)
+            }
+        }
+        callback(outputDirectory.resolve(typeSpec.name + ".java"))
     }
 }
