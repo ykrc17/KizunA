@@ -61,10 +61,13 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
     ```
     sh kizuna.sh [layoutXml] -d [srcDir] -p [packageName]
     ```
+    
+### ChangeLog
+- 2018-09-07  
+    弹框提示src路径未设置
 
 ### TODO
 - 支持相对包名('.'开头的包名)
-- IDE配置srcDir
 
 ### 竞品分析（笑
 说是竞品，其实Kizuna也就自己用用，不打算传播。  

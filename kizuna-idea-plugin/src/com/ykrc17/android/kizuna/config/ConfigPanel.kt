@@ -11,7 +11,7 @@ import javax.swing.JPanel
 
 class ConfigPanel(config: Config) : JPanel() {
     var currentY = 0
-    private val textField = EditorTextField(config.srcDirPath ?: "")
+    private val textField = EditorTextField(config.srcRelativePath)
 
     init {
         border = IdeBorderFactory.createTitledBorder("Kizuna")

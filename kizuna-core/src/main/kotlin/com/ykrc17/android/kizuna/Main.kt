@@ -7,7 +7,7 @@ import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
 import java.io.File
 
-fun kizuna(layoutXmlFile: File, inSrcDir: File?, inTargetPackage: String?) {
+fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, inTargetPackage: String?) {
     val projectStructure = ProjectStructure(layoutXmlFile.parentFile)
 
     val layoutReader = LayoutXmlReader(layoutXmlFile)
@@ -23,7 +23,7 @@ fun kizuna(layoutXmlFile: File, inSrcDir: File?, inTargetPackage: String?) {
         rPackageName = reader.packageName
     }
 
-    var srcDir = inSrcDir ?: projectStructure.readSrcDir()
+    var srcDir = srcAbsoluteDir ?: projectStructure.readSrcDir(srcRelativePath)
 
     val bindingArgs = Arguments(toBindingClassName(layoutResId),
             layoutElements,
@@ -58,13 +58,13 @@ internal class ProjectStructure {
         findFiles(dir.parentFile)
     }
 
-    fun readSrcDir(): File {
+    fun readSrcDir(relativePath: String): File {
         if (properties != null && buildFile != null && properties!!.exists() && buildFile!!.exists()) {
             PropertiesReader(properties!!).read("srcDir")?.also {
                 return File(buildFile!!.parentFile, it)
             }
         }
-        return buildFile!!.parentFile
+        return File(buildFile!!.parentFile, relativePath)
     }
 }
 
