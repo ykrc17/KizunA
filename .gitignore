@@ -1,6 +1,7 @@
 /.gradle/*
 /.idea/*
 !/.idea/modules.xml
+!/.idea/runConfigurations
 /classes
 /scripts/*.jar
 /scripts/*.zip
