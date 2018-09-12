@@ -1,12 +1,16 @@
 package com.ykrc17.android.kizuna.entity
 
-class LayoutElementEntity(clazz: String, id: String) {
+@Suppress("ConvertSecondaryConstructorToPrimary")
+class LayoutElementEntity {
     val viewClass: ClassEntity
     val viewId: String
 
-    init {
+    /**
+     * 用constructor不是因为我菜，是为了可读性
+     * TODO 创建converter
+     */
+    constructor(clazz: String, id: String) {
         val dotIndex = clazz.lastIndexOf('.')
-        // 原生控件
         viewClass = if (dotIndex < 0) {
             val packageName = when (clazz) {
                 "View", "ViewStub" ->

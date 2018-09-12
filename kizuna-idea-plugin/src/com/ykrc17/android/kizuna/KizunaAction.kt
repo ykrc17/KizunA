@@ -30,7 +30,7 @@ class KizunaAction : FileRefactoringAction() {
             }
 
             if (configStorage.config.srcRelativePath.isEmpty()) {
-                Notification("kizunaSrcPathError", "Kizuna", "生成终止, src相对路径为空", NotificationType.WARNING).notify(project)
+                Notification("kizunaSrcPathError", "KizunA", "生成终止, src相对路径为空", NotificationType.WARNING).notify(project)
                 return
             }
         }

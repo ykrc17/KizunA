@@ -1,5 +1,6 @@
-## Kizuna
-> 嗨，多磨。我是View绑定生成工具KizunaAndroid  
+## KizunA
+
+> kizuna源于日语，意为`牵绊`。大写A代表Android
 
 本项目的目的是把开发人员从`findViewById`的地狱中拯救出来  
 View绑定的代码编写机械重复、维护困难，完全可以由代码生成（或者让实习生去写
@@ -9,8 +10,8 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
 - 支持Java // 因为是Java代码生成器
 - 如果哪天不想用了，移除成本极低 // 因为是Java代码生成器
 
-### 示例
-> 左边是xml，右边是生成代码
+### 效果展示
+左边是xml，右边是生成代码。通过xml直接生成findViewById代码
 
 ![](imgs/example.png)
 
@@ -28,8 +29,8 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
 1. **执行命令**
     ```
     # AndroidStudio 或 IDEA
-    右键 -> Generate... -> Kizuna
-    Code -> Generate... -> Kizuna
+    右键 -> Generate... -> KizunA
+    Code -> Generate... -> KizunA
     ```
 1. **配置参数**  
     kizuna有两个必需的参数
@@ -63,13 +64,15 @@ View绑定的代码编写机械重复、维护困难，完全可以由代码生�
     ```
     
 ### ChangeLog
-- 2018-09-07  
-    - 生成后打开文件
-    - 弹框提示src路径未设置  
-    - 支持相对包名('.'开头的包名)
+2018-9-12
+- 修复不识别include的问题
+
+2018-09-07  
+- 生成后打开文件
+- 弹框提示src路径未设置  
+- 支持相对包名('.'开头的包名)
 
 ### 竞品分析（笑
-说是竞品，其实Kizuna也就自己用用，不打算传播。  
 说一下ButterKnife和kotlin-android-extensions为什么让我不爽
 
 **ButterKnife**

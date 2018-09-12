@@ -8,7 +8,7 @@ class ConfigController(project: Project) : Configurable {
     private val storage = ConfigStorage.getInstance(project)
     private val panel: ConfigPanel by lazy { ConfigPanel(storage.config) }
 
-    override fun getDisplayName() = "Kizuna"
+    override fun getDisplayName() = "KizunA"
 
     override fun isModified(): Boolean {
         return storage.config != panel.getConfig()

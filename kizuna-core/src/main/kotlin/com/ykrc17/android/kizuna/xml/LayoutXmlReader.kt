@@ -26,9 +26,14 @@ class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
                         packageName = it.value
                     }
         }
+        // 如果有id
         element.getAttributeByName(QName("http://schemas.android.com/apk/res/android", "id"))
                 ?.also {
-                    pairList.add(LayoutElementEntity(element.name.localPart, it.value))
+                    val viewClassName = element.name.localPart
+                    // 不支持include
+                    if (viewClassName != "include") {
+                        pairList.add(LayoutElementEntity(viewClassName, it.value))
+                    }
                 }
     }
 }

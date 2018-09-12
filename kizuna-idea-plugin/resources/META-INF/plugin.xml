@@ -1,11 +1,11 @@
-<idea-plugin url="https://github.com/ykrc17/Kizuna">
+<idea-plugin url="https://github.com/ykrc17/KizunA">
     <id>com.ykrc17.idea.kizuna</id>
-    <name>Kizuna</name>
+    <name>KizunA</name>
     <version>1.0</version>
     <vendor email="ykrc17@163.com">ykrc17</vendor>
 
     <description><![CDATA[
-      嗨，多磨。我是View绑定生成工具KizunaAndroid
+        View绑定工具KizunaAndroid
     ]]></description>
 
     <!--<change-notes><![CDATA[-->
