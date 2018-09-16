@@ -34,6 +34,10 @@ class KizunaAction : FileRefactoringAction() {
                 return
             }
         }
+
+        // 保存当前更改
+        project.save()
+
         kizuna(File(psiFile.virtualFile.path), null, configStorage.config.srcRelativePath, null) { outputFile ->
             LocalFileSystem.getInstance().refreshAndFindFileByIoFile(outputFile)?.also {
                 OpenFileDescriptor(project, it).navigate(true)
