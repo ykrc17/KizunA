@@ -4,11 +4,15 @@ import com.intellij.lang.Language
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.components.SettingsSavingComponent
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiManager
+import com.intellij.testFramework.saveStore
 import com.ykrc17.android.kizuna.action.FileRefactoringAction
 import com.ykrc17.android.kizuna.config.ConfigNotFoundDialog
 import com.ykrc17.android.kizuna.config.ConfigStorage
@@ -36,7 +40,7 @@ class KizunaAction : FileRefactoringAction() {
         }
 
         // 保存当前更改
-        project.save()
+        FileDocumentManager.getInstance().saveAllDocuments()
 
         kizuna(File(psiFile.virtualFile.path), null, configStorage.config.srcRelativePath, null) { outputFile ->
             LocalFileSystem.getInstance().refreshAndFindFileByIoFile(outputFile)?.also {
