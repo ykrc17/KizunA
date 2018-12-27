@@ -13,7 +13,7 @@ class LayoutElementEntity {
         val dotIndex = clazz.lastIndexOf('.')
         viewClass = if (dotIndex < 0) {
             val packageName = when (clazz) {
-                "View", "ViewStub" ->
+                "View", "ViewStub", "SurfaceView", "TextureView" ->
                     "android.view"
                 else ->
                     "android.widget"
