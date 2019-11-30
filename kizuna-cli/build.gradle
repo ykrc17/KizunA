@@ -1,21 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-
-    dependencies {
-        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.4"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.61"
-    }
-}
-
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: "kotlin"
-
-repositories {
-    mavenCentral()
-}
 
 shadowJar {
     baseName = 'kizuna'
@@ -35,7 +19,7 @@ shadowJar {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VERSION"
     compile "commons-cli:commons-cli:1.4"
     compile project(':kizuna-core')
 }
