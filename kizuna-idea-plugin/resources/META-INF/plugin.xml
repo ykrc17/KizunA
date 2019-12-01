@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/ykrc17/KizunA">
     <id>com.ykrc17.idea.kizuna</id>
     <name>KizunA</name>
-    <version>1.1.11121116</version>
+    <version>1.2.0</version>
     <vendor email="ykrc17@163.com">ykrc17</vendor>
 
     <description><![CDATA[
