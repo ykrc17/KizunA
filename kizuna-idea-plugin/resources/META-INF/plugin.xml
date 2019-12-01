@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/ykrc17/KizunA">
     <id>com.ykrc17.idea.kizuna</id>
     <name>KizunA</name>
-    <version>1.0</version>
+    <version>1.1.11121116</version>
     <vendor email="ykrc17@163.com">ykrc17</vendor>
 
     <description><![CDATA[
@@ -33,7 +33,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="Kizuna" class="com.ykrc17.android.kizuna.KizunaAction" text="Kizuna">
+        <action id="KizunaB" class="com.ykrc17.android.kizuna.KizunaBindingAction" text="Kizuna (Binding)">
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+        </action>
+        <action id="KizunaVH" class="com.ykrc17.android.kizuna.KizunaViewHolderAction" text="Kizuna (ViewHolder)">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
     </actions>

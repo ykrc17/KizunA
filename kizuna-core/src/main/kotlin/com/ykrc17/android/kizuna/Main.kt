@@ -1,13 +1,13 @@
 package com.ykrc17.android.kizuna
 
 import com.ykrc17.android.kizuna.generator.Arguments
-import com.ykrc17.android.kizuna.generator.BindingGenerator
+import com.ykrc17.android.kizuna.generator.BaseGenerator
 import com.ykrc17.android.kizuna.gradle.PropertiesReader
 import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
 import java.io.File
 
-fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, outputPackage: String?, callback: (File) -> Unit) {
+fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, outputPackage: String?, generator: BaseGenerator, callback: (File) -> Unit) {
     val layoutReader = LayoutXmlReader(layoutXmlFile)
     layoutReader.visitElements()
     val layoutElements = layoutReader.getElements()
@@ -25,11 +25,11 @@ fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, 
     val srcDir = srcAbsoluteDir ?: projectStructure.readSrcDir(srcRelativePath)
 
     val bindingArgs = Arguments(packageName,
-            parseOutputClassName(layoutResId),
+            parseOutputClassName(layoutResId, generator.getFileSuffix()),
             layoutElements,
             layoutResId,
             rPackageName)
-    BindingGenerator().generate(bindingArgs, srcDir, callback)
+    generator.generate(bindingArgs, srcDir, callback)
 }
 
 internal class ProjectStructure {
@@ -68,7 +68,7 @@ internal class ProjectStructure {
     }
 }
 
-internal fun parseOutputClassName(layoutFileName: String): String {
+internal fun parseOutputClassName(layoutFileName: String, fileSuffix: String): String {
     val result = StringBuilder()
     var nextIsUpper = true
 
@@ -82,6 +82,6 @@ internal fun parseOutputClassName(layoutFileName: String): String {
         }
     }
 
-    result.append("Binding")
+    result.append(fileSuffix)
     return result.toString()
 }
