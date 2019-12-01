@@ -11,6 +11,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.PsiFile
 import com.ykrc17.android.kizuna.action.FileRefactoringAction
+import com.ykrc17.android.kizuna.config.Config
 import com.ykrc17.android.kizuna.config.ConfigNotFoundDialog
 import com.ykrc17.android.kizuna.config.ConfigStorage
 import com.ykrc17.android.kizuna.generator.BaseGenerator
@@ -40,12 +41,12 @@ abstract class BaseKizunaAction : FileRefactoringAction() {
         // 保存当前更改
         FileDocumentManager.getInstance().saveAllDocuments()
 
-        kizuna(File(psiFile.virtualFile.path), configStorage.config.srcRelativePath, getGenerator()) { outputFile ->
+        kizuna(File(psiFile.virtualFile.path), configStorage.config.srcRelativePath, getGenerator(configStorage.config)) { outputFile ->
             LocalFileSystem.getInstance().refreshAndFindFileByIoFile(outputFile)?.also {
                 OpenFileDescriptor(project, it).navigate(true)
             }
         }
     }
 
-    abstract fun getGenerator(): BaseGenerator
+    abstract fun getGenerator(config: Config): BaseGenerator
 }

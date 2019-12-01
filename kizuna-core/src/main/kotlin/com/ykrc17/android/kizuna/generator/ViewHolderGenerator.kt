@@ -3,13 +3,23 @@ package com.ykrc17.android.kizuna.generator
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeSpec
 
-class ViewHolderGenerator : BaseGenerator() {
+class ViewHolderGenerator : BaseGenerator {
+    val viewHolderClassName: String
+
+    constructor(viewHolderClassName: String) : super() {
+        if (viewHolderClassName.isEmpty()) {
+            this.viewHolderClassName = "android.support.v7.widget.RecyclerView.ViewHolder"
+        } else {
+            this.viewHolderClassName = viewHolderClassName
+        }
+    }
+
     override fun getFileSuffix(): String {
         return "ViewHolder"
     }
 
     override fun onCreateClass(type: TypeSpec.Builder) {
-        type.superclass(ClassName.get("android.support.v7.widget", "RecyclerView", "ViewHolder"))
+        type.superclass(ClassName.bestGuess(viewHolderClassName))
     }
 
     override fun onCreateMethod(type: TypeSpec.Builder) {

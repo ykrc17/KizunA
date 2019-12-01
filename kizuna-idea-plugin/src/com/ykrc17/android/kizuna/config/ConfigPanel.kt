@@ -11,12 +11,14 @@ import javax.swing.JPanel
 
 class ConfigPanel(config: Config) : JPanel() {
     var currentY = 0
-    private val textField = EditorTextField(config.srcRelativePath)
+    private val srcRelativePath = EditorTextField(config.srcRelativePath)
+    private val viewHolderClassName = EditorTextField(config.viewHolderClassName)
 
     init {
         border = IdeBorderFactory.createTitledBorder("Kizuna")
         layout = GridBagLayout()
-        add(JLabel("Source directory:"), textField)
+        add(JLabel("Source directory:"), srcRelativePath)
+        add(JLabel("ViewHolder class:"), viewHolderClassName)
         addFiller()
     }
 
@@ -44,6 +46,6 @@ class ConfigPanel(config: Config) : JPanel() {
     }
 
     fun getConfig(): Config {
-        return Config(textField.text)
+        return Config(srcRelativePath.text, viewHolderClassName.text)
     }
 }

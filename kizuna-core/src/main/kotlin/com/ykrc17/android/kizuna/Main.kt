@@ -2,8 +2,6 @@ package com.ykrc17.android.kizuna
 
 import com.ykrc17.android.kizuna.generator.Arguments
 import com.ykrc17.android.kizuna.generator.BaseGenerator
-import com.ykrc17.android.kizuna.gradle.PropertiesReader
-import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
 import java.io.File
 

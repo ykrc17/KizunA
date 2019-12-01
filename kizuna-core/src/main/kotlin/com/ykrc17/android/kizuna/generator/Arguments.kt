@@ -7,7 +7,7 @@ import java.io.File
 
 class Arguments {
     val outputPackageName: String
-    val outputClassName: String?
+    var outputClassName: String?
     val layoutElements: List<LayoutElementEntity>
     val layoutResId: String
     val rClass: ClassEntity
