@@ -40,7 +40,7 @@ abstract class BaseKizunaAction : FileRefactoringAction() {
         // 保存当前更改
         FileDocumentManager.getInstance().saveAllDocuments()
 
-        kizuna(File(psiFile.virtualFile.path), null, configStorage.config.srcRelativePath, null, getGenerator()) { outputFile ->
+        kizuna(File(psiFile.virtualFile.path), configStorage.config.srcRelativePath, getGenerator()) { outputFile ->
             LocalFileSystem.getInstance().refreshAndFindFileByIoFile(outputFile)?.also {
                 OpenFileDescriptor(project, it).navigate(true)
             }

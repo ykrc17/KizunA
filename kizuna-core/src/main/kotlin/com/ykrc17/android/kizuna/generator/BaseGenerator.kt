@@ -1,11 +1,16 @@
 package com.ykrc17.android.kizuna.generator
 
 import com.squareup.javapoet.*
+import com.ykrc17.android.kizuna.parseOutputClassName
 import java.io.File
 import javax.lang.model.element.Modifier
 
 abstract class BaseGenerator {
     fun generate(args: Arguments, srcDir: File, callback: (File) -> Unit) {
+        if (args.outputClassName.isNullOrEmpty()) {
+            args.outputClassName= parseOutputClassName(args.layoutResId, getFileSuffix())
+        }
+
         val javaFile = JavaFile.builder(args.outputPackageName, createClass(args)).build()
         javaFile.writeTo(srcDir, callback)
     }

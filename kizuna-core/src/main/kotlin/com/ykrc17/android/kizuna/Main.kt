@@ -7,14 +7,8 @@ import com.ykrc17.android.kizuna.xml.LayoutXmlReader
 import com.ykrc17.android.kizuna.xml.ManifestXmlReader
 import java.io.File
 
-fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, outputPackage: String?, generator: BaseGenerator, callback: (File) -> Unit) {
-    val layoutReader = LayoutXmlReader(layoutXmlFile)
-    layoutReader.visitElements()
-    val layoutElements = layoutReader.getElements()
-    val layoutResId = layoutXmlFile.nameWithoutExtension
-    val packageName = outputPackage ?: layoutReader.getPackage()
-
-    // read AndroidManifest.xml and kizuna.properties
+fun kizuna(layoutXmlFile: File, srcRelativePath: String, generator: BaseGenerator, callback: (File) -> Unit) {
+    // read AndroidManifest.xml
     val projectStructure = ProjectStructure(layoutXmlFile.parentFile)
     var rPackageName = ""
     projectStructure.manifest?.also {
@@ -22,19 +16,14 @@ fun kizuna(layoutXmlFile: File, srcAbsoluteDir: File?, srcRelativePath: String, 
         reader.visitElements()
         rPackageName = reader.packageName
     }
-    val srcDir = srcAbsoluteDir ?: projectStructure.readSrcDir(srcRelativePath)
+    val srcDir = projectStructure.readSrcDir(srcRelativePath)
 
-    val bindingArgs = Arguments(packageName,
-            parseOutputClassName(layoutResId, generator.getFileSuffix()),
-            layoutElements,
-            layoutResId,
-            rPackageName)
+    val bindingArgs = Arguments(layoutXmlFile, rPackageName)
     generator.generate(bindingArgs, srcDir, callback)
 }
 
 internal class ProjectStructure {
     var manifest: File? = null
-    var properties: File? = null
     var buildFile: File? = null
 
     constructor(dir: File) {
@@ -51,7 +40,6 @@ internal class ProjectStructure {
         }
         if (children.contains("build.gradle")) {
             buildFile = children["build.gradle"]
-            properties = children["kizuna.properties"]
             return
         }
         if (dir.parentFile == null) return
@@ -59,11 +47,6 @@ internal class ProjectStructure {
     }
 
     fun readSrcDir(relativePath: String): File {
-        if (properties != null && buildFile != null && properties!!.exists() && buildFile!!.exists()) {
-            PropertiesReader(properties!!).read("srcDir")?.also {
-                return File(buildFile!!.parentFile, it)
-            }
-        }
         return File(buildFile!!.parentFile, relativePath)
     }
 }
