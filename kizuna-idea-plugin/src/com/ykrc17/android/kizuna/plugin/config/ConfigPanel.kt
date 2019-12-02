@@ -1,7 +1,8 @@
-package com.ykrc17.android.kizuna.config
+package com.ykrc17.android.kizuna.plugin.config
 
 import com.intellij.ui.EditorTextField
 import com.intellij.ui.IdeBorderFactory
+import com.ykrc17.android.kizuna.plugin.config.Config
 import java.awt.Component
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout

@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.config
+package com.ykrc17.android.kizuna.plugin.config
 
 class Config(var srcRelativePath: String = "", var viewHolderClassName: String = "") {
 

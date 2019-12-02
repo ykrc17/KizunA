@@ -1,8 +1,9 @@
-package com.ykrc17.android.kizuna
+package com.ykrc17.android.kizuna.plugin
 
-import com.ykrc17.android.kizuna.config.Config
+import com.ykrc17.android.kizuna.plugin.config.Config
 import com.ykrc17.android.kizuna.generator.BaseGenerator
 import com.ykrc17.android.kizuna.generator.BindingGenerator
+import com.ykrc17.android.kizuna.plugin.BaseKizunaAction
 
 class KizunaBindingAction : BaseKizunaAction() {
 

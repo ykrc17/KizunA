@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna
+package com.ykrc17.android.kizuna.plugin
 
 import com.intellij.lang.Language
 import com.intellij.notification.Notification
@@ -10,11 +10,12 @@ import com.intellij.openapi.fileTypes.StdFileTypes
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.PsiFile
-import com.ykrc17.android.kizuna.action.FileRefactoringAction
-import com.ykrc17.android.kizuna.config.Config
-import com.ykrc17.android.kizuna.config.ConfigNotFoundDialog
-import com.ykrc17.android.kizuna.config.ConfigStorage
+import com.ykrc17.android.kizuna.plugin.action.FileRefactoringAction
+import com.ykrc17.android.kizuna.plugin.config.Config
+import com.ykrc17.android.kizuna.plugin.config.ConfigNotFoundDialog
+import com.ykrc17.android.kizuna.plugin.config.ConfigStorage
 import com.ykrc17.android.kizuna.generator.BaseGenerator
+import com.ykrc17.android.kizuna.kizuna
 import java.io.File
 
 abstract class BaseKizunaAction : FileRefactoringAction() {

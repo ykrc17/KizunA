@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.config
+package com.ykrc17.android.kizuna.plugin.config
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper

@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.action
+package com.ykrc17.android.kizuna.plugin.action
 
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Editor

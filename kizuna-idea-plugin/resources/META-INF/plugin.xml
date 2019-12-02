@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/ykrc17/KizunA">
     <id>com.ykrc17.idea.kizuna</id>
     <name>KizunA</name>
-    <version>1.2.0</version>
+    <version>1.2.0.2</version>
     <vendor email="ykrc17@163.com">ykrc17</vendor>
 
     <description><![CDATA[
@@ -24,8 +24,8 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceImplementation="com.ykrc17.android.kizuna.config.ConfigStorage"/>
-        <projectConfigurable instance="com.ykrc17.android.kizuna.config.ConfigController"/>
+        <projectService serviceImplementation="com.ykrc17.android.kizuna.plugin.config.ConfigStorage"/>
+        <projectConfigurable instance="com.ykrc17.android.kizuna.plugin.config.ConfigController"/>
     </extensions>
 
     <project-components>
@@ -33,10 +33,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="KizunaB" class="com.ykrc17.android.kizuna.KizunaBindingAction" text="Kizuna (Binding)">
+        <action id="KizunaB" class="com.ykrc17.android.kizuna.plugin.KizunaBindingAction" text="Kizuna (Binding)">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
-        <action id="KizunaVH" class="com.ykrc17.android.kizuna.KizunaViewHolderAction" text="Kizuna (ViewHolder)">
+        <action id="KizunaVH" class="com.ykrc17.android.kizuna.plugin.KizunaViewHolderAction" text="Kizuna (ViewHolder)">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
         </action>
     </actions>
