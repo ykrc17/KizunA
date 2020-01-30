@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.gradle
+package com.ykrc17.android.kizuna.core.gradle
 
 import java.io.File
 

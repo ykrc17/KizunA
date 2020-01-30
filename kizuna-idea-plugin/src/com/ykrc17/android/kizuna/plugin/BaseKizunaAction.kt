@@ -14,8 +14,8 @@ import com.ykrc17.android.kizuna.plugin.action.FileRefactoringAction
 import com.ykrc17.android.kizuna.plugin.config.Config
 import com.ykrc17.android.kizuna.plugin.config.ConfigNotFoundDialog
 import com.ykrc17.android.kizuna.plugin.config.ConfigStorage
-import com.ykrc17.android.kizuna.generator.BaseGenerator
-import com.ykrc17.android.kizuna.kizuna
+import com.ykrc17.android.kizuna.core.generator.BaseGenerator
+import com.ykrc17.android.kizuna.core.kizuna
 import java.io.File
 
 abstract class BaseKizunaAction : FileRefactoringAction() {

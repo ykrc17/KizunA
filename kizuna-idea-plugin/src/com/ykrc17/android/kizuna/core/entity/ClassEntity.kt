@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.entity
+package com.ykrc17.android.kizuna.core.entity
 
 import com.squareup.javapoet.ClassName
 

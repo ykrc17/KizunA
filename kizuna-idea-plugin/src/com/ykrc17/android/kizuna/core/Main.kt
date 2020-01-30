@@ -1,8 +1,8 @@
-package com.ykrc17.android.kizuna
+package com.ykrc17.android.kizuna.core
 
-import com.ykrc17.android.kizuna.generator.Arguments
-import com.ykrc17.android.kizuna.generator.BaseGenerator
-import com.ykrc17.android.kizuna.xml.ManifestXmlReader
+import com.ykrc17.android.kizuna.core.generator.Arguments
+import com.ykrc17.android.kizuna.core.generator.BaseGenerator
+import com.ykrc17.android.kizuna.core.parser.ManifestXmlReader
 import java.io.File
 
 fun kizuna(layoutXmlFile: File, srcRelativePath: String, generator: BaseGenerator, callback: (File) -> Unit) {

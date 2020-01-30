@@ -1,8 +1,8 @@
-package com.ykrc17.android.kizuna.generator
+package com.ykrc17.android.kizuna.core.generator
 
-import com.ykrc17.android.kizuna.entity.ClassEntity
-import com.ykrc17.android.kizuna.entity.LayoutElementEntity
-import com.ykrc17.android.kizuna.xml.LayoutXmlReader
+import com.ykrc17.android.kizuna.core.entity.ClassEntity
+import com.ykrc17.android.kizuna.core.entity.LayoutElementEntity
+import com.ykrc17.android.kizuna.core.parser.LayoutXmlReader
 import java.io.File
 
 class Arguments {

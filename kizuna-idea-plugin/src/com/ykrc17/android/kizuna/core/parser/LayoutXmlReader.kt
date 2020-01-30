@@ -1,15 +1,16 @@
-package com.ykrc17.android.kizuna.xml
+package com.ykrc17.android.kizuna.core.parser
 
-import com.ykrc17.android.kizuna.entity.LayoutElementEntity
+import com.ykrc17.android.kizuna.core.entity.LayoutElementEntity
 import java.io.File
 import javax.xml.namespace.QName
+import javax.xml.stream.events.Attribute
 import javax.xml.stream.events.StartElement
 
 class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
 
     private var packageName: String? = null
     private var className: String? = null
-    private val pairList = arrayListOf<LayoutElementEntity>()
+    private val layoutElements = arrayListOf<LayoutElementEntity>()
 
     fun getPackage(): String? {
         return packageName
@@ -20,7 +21,7 @@ class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
     }
 
     fun getElements(): List<LayoutElementEntity> {
-        return pairList
+        return layoutElements
     }
 
     override fun onVisitElement(element: StartElement) {
@@ -39,11 +40,27 @@ class LayoutXmlReader(file: File) : AbstractXmlReader(file) {
         // 如果有id
         element.getAttributeByName(QName("http://schemas.android.com/apk/res/android", "id"))
                 ?.also {
-                    val viewClassName = element.name.localPart
-                    // 不支持include
-                    if (viewClassName != "include") {
-                        pairList.add(LayoutElementEntity(viewClassName, it.value))
-                    }
+                    layoutElements.add(parseLayoutElement(element, it))
                 }
+    }
+
+    private fun parseLayoutElement(element: StartElement, it: Attribute): LayoutElementEntity {
+        var clazz = element.name.localPart
+        if (clazz == "include") {
+            clazz = "View"
+        }
+
+        var packageName = ""
+        val dotIndex = clazz.lastIndexOf('.')
+        if (dotIndex < 0) {
+            packageName = when (clazz) {
+                "View", "ViewStub", "SurfaceView", "TextureView" -> "android.view"
+                else -> "android.widget"
+            }
+        } else {
+            packageName = clazz.substring(0, dotIndex)
+            clazz = clazz.substring(dotIndex + 1)
+        }
+        return LayoutElementEntity(packageName, clazz, it.value);
     }
 }

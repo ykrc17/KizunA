@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.generator
+package com.ykrc17.android.kizuna.core.generator
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeSpec

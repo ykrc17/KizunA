@@ -1,4 +1,4 @@
-package com.ykrc17.android.kizuna.xml
+package com.ykrc17.android.kizuna.core.parser
 
 import java.io.File
 import java.io.FileReader

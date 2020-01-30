@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android Studio AI-191.8026.42.35.5977832" jdkType="IDEA JDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Kizuna.kizuna-core.main" />
     <orderEntry type="library" scope="PROVIDED" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="library" name="com.squareup:javapoet:1.12.1" level="project" />
   </component>
 </module>
