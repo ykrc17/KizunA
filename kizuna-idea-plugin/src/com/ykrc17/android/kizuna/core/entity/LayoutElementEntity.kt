@@ -5,8 +5,7 @@ class LayoutElementEntity {
     val viewId: String
 
     /**
-     * 用constructor不是因为我菜，是为了可读性
-     * TODO 创建converter
+     * 用secondary constructor不是因为我菜，是为了可读性
      */
     constructor(packageName: String, clazz: String, id: String) {
         viewClass = ClassEntity(packageName, clazz)
